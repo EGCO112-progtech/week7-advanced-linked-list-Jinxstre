@@ -2,6 +2,7 @@
 // self-referential structure
 struct Node {
    int data; // each listNode contains a character
+   char name[50];
    struct Node *nextPtr; // pointer to next node
    struct Node *pPtr; // pointer to next node
 }; // end structure listNode
@@ -14,9 +15,10 @@ typedef LLnode *LLPtr; // synonym for ListNode*
 int deletes( LLPtr *sPtr, int value );
 int Deletes( LLPtr *sPtr, int value );
 int isEmpty( LLPtr sPtr );
-void insert( LLPtr *sPtr, int value );
+void insert( LLPtr *sPtr, int value , char name[50]);
 void printList( LLPtr currentPtr );
 void instructions( void );
+void freeList(LLPtr *sPtr);
 
 
 // display program instructions to user
@@ -29,7 +31,7 @@ void instructions( void )
 } // end function instructions
 
 // insert a new value into the list in sorted order
-void insert( LLPtr *sPtr, int value )
+void insert( LLPtr *sPtr, int value , char name[50])
 {
    LLPtr newPtr; // pointer to new node
    LLPtr previousPtr; // pointer to previous node in list
@@ -39,6 +41,7 @@ void insert( LLPtr *sPtr, int value )
 
    if ( newPtr != NULL ) { // is space available
       newPtr->data = value; // place value in node
+      strcpy(newPtr->name, name);
       newPtr->nextPtr = NULL; // node does not link to another node
       newPtr->pPtr = NULL;
     
@@ -63,7 +66,6 @@ void insert( LLPtr *sPtr, int value )
          newPtr->pPtr = previousPtr;
          
          previousPtr->nextPtr = newPtr;
-         newPtr->nextPtr = currentPtr;
          if (currentPtr != NULL) currentPtr->pPtr = newPtr;
  
       } // end else
@@ -154,11 +156,11 @@ void printList( LLPtr currentPtr )
 
       // while not the end of the list
       while ( currentPtr->nextPtr!= NULL ) {
-         printf( "%d --> ", currentPtr->data );
+         printf( "%d %s -->", currentPtr->data, currentPtr->name );
          currentPtr = currentPtr->nextPtr;
       } // end while
 
-      printf( "%d --> NULL\n",currentPtr->data );
+      printf( "%d %s -->NULL\n",currentPtr->data, currentPtr->name );
 
    } // end else
 } // end function printList
@@ -178,10 +180,25 @@ void RprintList( LLPtr currentPtr )
       } // end while
 
       while ( currentPtr != NULL ) {
-         printf( "%d --> ", currentPtr->data );
+         printf( "%d %s -->", currentPtr->data, currentPtr->name );
          currentPtr = currentPtr->pPtr;
       }
       printf( "NULL\n" );
 
    } // end else
 } // end function printList
+
+void freeList(LLPtr *sPtr) {
+   LLPtr currentPtr = *sPtr;
+   LLPtr tempPtr;
+
+   while (currentPtr != NULL) {
+       tempPtr = currentPtr;  
+       currentPtr = currentPtr->nextPtr;  
+       free(tempPtr);  
+   }
+
+   *sPtr = NULL;  
+   puts("All nodes have been freed.");
+}
+

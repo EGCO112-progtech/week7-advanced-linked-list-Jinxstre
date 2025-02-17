@@ -1,5 +1,5 @@
-compile: ll_example.c
-	 gcc ll_example.c -o ll
+compile: Assg7.c
+	 gcc Assg7.c -o ll
 
 
 run: ll
