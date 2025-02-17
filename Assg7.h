@@ -152,7 +152,7 @@ void printList( LLPtr currentPtr )
       puts( "List is empty.\n" );
    } // end if
    else {
-      puts( "The list is: " );
+      //puts( "The list is: " );
 
       // while not the end of the list
       while ( currentPtr->nextPtr!= NULL ) {
@@ -172,7 +172,7 @@ void RprintList( LLPtr currentPtr )
       puts( "List is empty.\n" );
    } // end if
    else {
-      puts( "The Reverse list is: " );
+      //puts( "The Reverse list is: " );
 
       // while not the end of the list
       while ( currentPtr->nextPtr!= NULL ) {
